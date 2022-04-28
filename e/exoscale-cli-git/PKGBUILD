@@ -1,0 +1,61 @@
+# Maintainer: Pierre-Yves Ritschard <pyr@spootnik.org>
+# Maintainer: Marc Falzon <marc@exoscale.com>
+# Contributor: FabioLolix
+
+pkgname=exoscale-cli
+pkgver=1.52.1.r3.g1eb771a8
+pkgrel=1
+pkgdesc="Command-line tool for everything at Exoscale: compute, storage, dns"
+arch=('x86_64')
+url="https://github.com/exoscale/cli"
+license=('Apache')
+makedepends=(git go)
+provides=('exoscale-cli')
+conflicts=('exoscale-cli')
+source=("exoscale-cli::git+https://github.com/exoscale/cli.git"
+        "git+https://github.com/exoscale/go.mk.git")
+sha256sums=('SKIP'
+            'SKIP')
+
+pkgver() {
+  cd "${srcdir}/exoscale-cli"
+  git describe --long --tags | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+prepare() {
+  cd "${srcdir}/exoscale-cli"
+  git submodule init
+  git config 'submodule.go.mk.url' "${srcdir}/go.mk"
+  git submodule update
+}
+
+build() {
+  cd "${srcdir}/exoscale-cli"
+
+  go build \
+    -trimpath \
+    -buildmode=pie \
+    -mod=readonly \
+    -modcacherw \
+    -ldflags "-linkmode external -extldflags \"${LDFLAGS}\"" \
+    .
+
+  mkdir -p manpage
+  go run -mod vendor docs/main.go --man-page
+
+  mkdir -p contrib/completion/{bash,powershell,zsh}
+  go run -mod vendor completion/main.go bash ; mv bash_completion contrib/completion/bash/exo
+#  go run -mod vendor completion/main.go powershell ; mv powershell_completion contrib/completion/powershell/exo
+  go run -mod vendor completion/main.go zsh ; mv zsh_completion contrib/completion/zsh/_exo
+
+}
+
+package() {
+  cd "${srcdir}/exoscale-cli"
+
+  install -Dm755 cli "${pkgdir}/usr/bin/exo"
+  install -Dm644 ./contrib/completion/bash/exo -t "${pkgdir}/usr/share/bash-completion/completions/"
+  install -Dm644 ./contrib/completion/zsh/_exo -t "${pkgdir}/usr/share/zsh/site-functions/"
+  install -dm755 "${pkgdir}/usr/share/man/man1"
+  install -Dm644 ./manpage/* "${pkgdir}/usr/share/man/man1"
+}

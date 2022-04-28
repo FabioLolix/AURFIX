@@ -1,0 +1,21 @@
+# Maintainer: Pierre-Yves Ritschard <pyr@spootnik.org>
+# Maintainer: Marc Falzon <marc@exoscale.com>
+# Contributor: FabioLolix
+
+pkgname=exoscale-cli-bin
+pkgver=1.52.1
+pkgrel=1
+pkgdesc="Command-line tool for everything at Exoscale: compute, storage, dns"
+arch=('x86_64')
+url="https://github.com/exoscale/cli"
+license=('Apache')
+provides=('exoscale-cli')
+conflicts=('exoscale-cli')
+source=("https://github.com/exoscale/cli/releases/download/v${pkgver}/exoscale-cli_${pkgver}_linux_amd64.tar.gz")
+sha256sums=('ba161db651e8df852d2dc0dc6afdcd3e22297509ad0e28243c639354d64635e8')
+
+package() {
+  install -Dm755 "${srcdir}/exo" "${pkgdir}/usr/bin/exo"
+  install -Dm 644 "${srcdir}/contrib/completion/bash/exo" "${pkgdir}/usr/share/bash-completion/completions/exo"
+  install -Dm 644 "${srcdir}/manpage/"* -t "${pkgdir}/usr/share/man/man1"
+}
