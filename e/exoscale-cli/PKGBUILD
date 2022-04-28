@@ -3,7 +3,7 @@
 # Contributor: FabioLolix
 
 pkgname=exoscale-cli
-pkgver=1.52.1
+pkgver=1.53.0
 pkgrel=1
 pkgdesc="Command-line tool for everything at Exoscale: compute, storage, dns"
 arch=('x86_64')

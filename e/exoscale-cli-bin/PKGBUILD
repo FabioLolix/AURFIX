@@ -3,7 +3,7 @@
 # Contributor: FabioLolix
 
 pkgname=exoscale-cli-bin
-pkgver=1.52.1
+pkgver=1.53.0
 pkgrel=1
 pkgdesc="Command-line tool for everything at Exoscale: compute, storage, dns"
 arch=('x86_64')
@@ -12,7 +12,7 @@ license=('Apache')
 provides=('exoscale-cli')
 conflicts=('exoscale-cli')
 source=("https://github.com/exoscale/cli/releases/download/v${pkgver}/exoscale-cli_${pkgver}_linux_amd64.tar.gz")
-sha256sums=('ba161db651e8df852d2dc0dc6afdcd3e22297509ad0e28243c639354d64635e8')
+sha256sums=('96b9acf085aef1a5f87ef069fcd775e19f502bd780078817f3d1579ffdf9e54b')
 
 package() {
   install -Dm755 "${srcdir}/exo" "${pkgdir}/usr/bin/exo"
