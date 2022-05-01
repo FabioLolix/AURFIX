@@ -1,7 +1,7 @@
 # Maintainer: numToStr <sudo@vikasraj.dev>
 
-pkgname=lemmy-help
-pkgver=v0.0.3
+pkgname=lemmy-help-bin
+pkgver=0.0.3
 pkgrel=1
 pkgdesc="Emmylua parser and transformer"
 arch=('x86_64' 'aarch64' 'armv7')
@@ -9,16 +9,19 @@ url=https://github.com/numToStr/lemmy-help
 license=('MIT')
 provides=($pkgname)
 conflicts=($pkgname)
+source=('https://github.com/numToStr/lemmy-help/blob/master/LICENSE')
+sha256sums=('4b8682932a656cded5c78d200061da0b1df86909a56bcc68cde53c98deea92bb')
 
-source_x86_64=("$url/releases/download/$pkgver/$pkgname-x86_64-unknown-linux-gnu.tar.gz")
-md5sums_x86_64=(SKIP)
+source_x86_64=("lemmy-help-${pkgver}-x86_64-unknown-linux-gnu.tar.gz::$url/releases/download/v$pkgver/lemmy-help-x86_64-unknown-linux-gnu.tar.gz")
+sha256sums_x86_64=('124ce9ebf4d5ac8670c44edcdf6b1d06d4e3ef11c75f19f4d236a5f19a22a8d9')
 
-source_armv7=("$url/releases/download/$pkgver/$pkgname-armv7-unknown-linux-gnueabihf.tar.gz")
-md5sums_armv7=(SKIP)
+sha256sums_armv7=('2ae3cfc02a8131cbebf2ec752e87a563d8b8004212d9464011159ab363293690')
+source_armv7=("emmy-help-${pkgver}-armv7-unknown-linux-gnueabihf.tar.gz::$url/releases/download/v$pkgver/lemmy-help-armv7-unknown-linux-gnueabihf.tar.gz")
 
-source_aarch64=("$url/releases/download/$pkgver/$pkgname-aarch64-unknown-linux-gnu.tar.gz")
-md5sums_aarch64=(SKIP)
+source_aarch64=("lemmy-help-${pkgver}-aarch64-unknown-linux-gnu.tar.gz::$url/releases/download/v$pkgver/lemmy-help-aarch64-unknown-linux-gnu.tar.gz")
+sha256sums_aarch64=('e28213e15d68555256b4509d125372c4bb286e92ae61fec830224437c5efcff6')
 
 package() {
-	install -Dm755 "${srcdir}/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
+	install -Dm755 "${srcdir}/lemmy-help" -t "${pkgdir}/usr/bin/"
+    install -D LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }

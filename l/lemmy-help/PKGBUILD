@@ -1,24 +1,23 @@
 # Maintainer: numToStr <sudo@vikasraj.dev>
 
 pkgname=lemmy-help
-pkgver=v0.0.3
+pkgver=0.0.3
 pkgrel=1
 pkgdesc="Emmylua parser and transformer"
 arch=('x86_64' 'aarch64' 'armv7')
 url=https://github.com/numToStr/lemmy-help
 license=('MIT')
-provides=($pkgname)
-conflicts=($pkgname)
+makedepends=(cargo)
+source=("${pkgname}-${pkgver}.tar.gz::https://github.com/numToStr/lemmy-help/archive/refs/tags/v${pkgver}.tar.gz")
+sha256sums=('357eb9b05ac517f5ac1e3381335ef243802b51bc656c1dfd7e0f4cdc5cd02c21')
 
-source_x86_64=("$url/releases/download/$pkgver/$pkgname-x86_64-unknown-linux-gnu.tar.gz")
-md5sums_x86_64=(SKIP)
-
-source_armv7=("$url/releases/download/$pkgver/$pkgname-armv7-unknown-linux-gnueabihf.tar.gz")
-md5sums_armv7=(SKIP)
-
-source_aarch64=("$url/releases/download/$pkgver/$pkgname-aarch64-unknown-linux-gnu.tar.gz")
-md5sums_aarch64=(SKIP)
+build() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  cargo build --release
+}
 
 package() {
-	install -Dm755 "${srcdir}/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  install -Dm755 lemmy-help -t "${pkgdir}/usr/bin/"
+  install -D LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
