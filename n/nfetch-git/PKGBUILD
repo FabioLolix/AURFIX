@@ -1,19 +1,29 @@
+# Maintainer: Luke <Infinitybeond1@protonmail.com>
+
 pkgname='nfetch-git'
 pkgdesc="A minimal linux fetch utility written in nim"
-pkgver=1.00
+pkgver=1.02.r1.g933dfac
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/Infinitybeond1/nfetch-src"
 license=('GPL3')
-source=("nfetch-src-$pkgver::https://github.com/Infinitybeond1/nfetch-src/archive/refs/tags/nfetch.tar.gz")
-makedepends=('nim' 'nimble')
-conflicts=('nfetch-bin')
-sha256sums=('6bf668a334f0053a907e0c7c594bc68fa5e0ab06d40147367e235e05fc32010d')
+makedepends=('nim' 'nimble' git)
+provides=(nfetch)
+conflicts=(nfetch)
+source=("git+https://github.com/Infinitybeond1/nfetch-src.git")
+sha256sums=('SKIP')
+
+pkgver() {
+  cd "nfetch-src"
+  git describe --long --tags | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+  cd "nfetch-src"
+  nimble build
+}
 
 package() {
-  wget "https://github.com/Infinitybeond1/nfetch-src/archive/refs/tags/nfetch.tar.gz"
-  tar xvf nfetch.tar.gz
-  cd nfetch-src-nfetch
-  nimble build
-  sudo install nfetch /usr/bin
+  cd "nfetch-src"
+  install -D nfetch -t "$pkgdir/usr/bin/"
 }
