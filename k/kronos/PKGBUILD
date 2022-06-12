@@ -11,16 +11,17 @@ _repo='https://github.com/FCare/Kronos'
 license=('GPL2')
 provides=('kronos')
 depends=('freeglut'
-	 'glew'
-	 'openal'
+         'glew'
+         'openal'
          'qt5-base'
          'qt5-multimedia'
-	 'sdl2')
-makedepends=("clang"
-	     "cmake"
-	     "git")
+         'sdl2')
+makedepends=(cmake git)
 source=("${pkgname}::git+${_repo}.git#tag=${pkgver}_official_release")
 md5sums=('SKIP')
+
+export CFLAGS+=" -Wno-format -Wno-format-security"
+export CXXFLAGS="${CFLAGS}"
 
 prepare() {
     cd "${pkgname}/yabause"
