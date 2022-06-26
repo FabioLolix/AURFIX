@@ -1,0 +1,20 @@
+# Maintainer: 
+
+pkgname=cider-beta-bin
+_pkgver=1.5.1-beta.99
+pkgver=${_pkgver//-/.}
+pkgrel=1
+pkgdesc="Open source Apple Music client built from the ground up with Vue.js and Electron"
+arch=(x86_64)
+url="https://cider.sh/"
+license=(AGPL3)
+depends=(gtk3 nss alsa-lib)
+optdepends=('libnotify: Playback notifications')
+provides=(cider)
+conflicts=(cider)
+source_x86_64=("https://github.com/ciderapp/cider-releases/releases/download/v${_pkgver}/cider_${_pkgver}_amd64.deb")
+sha256sums_x86_64=('32c8594fe2d8149a228728e09ef03b79822b36f9d331cff18927fe8c0641c5e9')
+
+package() {
+  bsdtar -xf ${srcdir}/data.tar.xz -C ${pkgdir}/
+}
