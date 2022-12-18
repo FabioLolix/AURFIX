@@ -1,0 +1,52 @@
+# Maintainer:
+# Contributor: FabioLolix
+
+pkgname=dopamine-git
+pkgver=3.0.0.preview18.r12.gf61a3c6d
+pkgrel=1
+pkgdesc="Audio player"
+arch=(x86_64)
+url="https://www.digimezzo.com/software/dopamine/"
+license=(GPL3)
+depends=(alsa-lib gtk3 nss)
+makedepends=(git nodejs-lts-fermium libxcrypt-compat npm rpm-tools)
+provides=(dopamine)
+conflicts=(dopamine)
+source=("git+https://github.com/digimezzo/Dopamine.git")
+sha256sums=('SKIP')
+
+pkgver() {
+  cd Dopamine
+  git describe --long --tags | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+  cd Dopamine
+  npm install
+  npm run electron:linux
+}
+
+package() {
+  cd Dopamine
+  install -d "${pkgdir}/opt/dopamine"
+  cp -r release/linux-unpacked/* "${pkgdir}/opt/dopamine"
+
+  install -d "${pkgdir}/usr/bin"
+  ln -s /opt/dopamine/dopamine "${pkgdir}/usr/bin/dopamine"
+
+  install -D Dopamine.png "${pkgdir}/usr/share/pixmaps/dopamine.png"
+
+  install -d "${pkgdir}/usr/share/applications/"
+
+  cat > ${pkgdir}/usr/share/applications/dopamine.desktop << _EOD
+[Desktop Entry]
+Name=Dopamine
+Exec=dopamine
+Terminal=false
+Type=Application
+Icon=dopamine
+StartupWMClass=Dopamine
+Comment=The audio player that keeps it simple
+Categories=Utility;
+_EOD
+}
