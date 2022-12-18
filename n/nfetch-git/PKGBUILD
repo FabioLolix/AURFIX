@@ -1,13 +1,15 @@
-# Maintainer: Luke <Infinitybeond1@protonmail.com>
+# Maintainer:
+# Contributor: Fabio 'Lolix' Loli <lolix@disroot.org>
+# Contributor: Luke <Infinitybeond1@protonmail.com>
 
-pkgname='nfetch-git'
+pkgname=nfetch-git
 pkgdesc="A minimal linux fetch utility written in nim"
-pkgver=1.02.r1.g933dfac
-pkgrel=1
-arch=('x86_64')
+pkgver=2.r19.g2655d63
+pkgrel=2
+arch=(x86_64)
 url="https://github.com/Infinitybeond1/nfetch-src"
-license=('GPL3')
-makedepends=('nim' 'nimble' git)
+license=(GPL3)
+makedepends=(nim git)
 provides=(nfetch)
 conflicts=(nfetch)
 source=("git+https://github.com/Infinitybeond1/nfetch-src.git")
@@ -25,5 +27,6 @@ build() {
 
 package() {
   cd "nfetch-src"
-  install -D nfetch -t "$pkgdir/usr/bin/"
+  install -D nfetch -t "${pkgdir}/usr/bin/"
+  install -D config.ini -t "${pkgdir}/usr/share/doc/nfetch"
 }
