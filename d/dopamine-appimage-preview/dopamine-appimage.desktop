@@ -1,0 +1,10 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=Dopamine
+Exec=dopamine
+Terminal=false
+Type=Application
+Icon=dopamine
+StartupWMClass=Dopamine
+Comment=A simple but elegant Music player
+Categories=Audio; Utility;
