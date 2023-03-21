@@ -1,0 +1,60 @@
+# Maintainer: Your Name <youremail@domain.com>
+
+pkgname=nordvpn
+pkgver=3.16.0
+pkgrel=1
+pkgdesc="NordVPN cli Linux client"
+arch=(x86_64)
+url="https://github.com/NordSecurity/nordvpn-linux"
+license=(GPL3)
+depends=(glibc iptables iproute2 libxml2)
+makedepends=(git go mage rust cargo wget)
+#install=
+options=(!lto)
+source=("git+https://github.com/NordSecurity/nordvpn-linux.git#tag=${pkgver}")
+sha256sums=('SKIP')
+
+prepare() {
+  cd nordvpn-linux
+  #git -c protocol.file.allow=always submodule update --init --recursive
+  #submodules don't seem public
+  #configure git submodules! https://wiki.archlinux.org/title/VCS_package_guidelines#Git_submodules
+
+  ln -sf .env.sample .env
+}
+
+  #https://wiki.archlinux.org/title/Go_package_guidelines#Building
+  #https://github.com/NordSecurity/nordvpn-linux/blob/main/BUILD.md
+
+build() {
+  cd nordvpn-linux
+  export CGO_CPPFLAGS="${CPPFLAGS}"
+  export CGO_CFLAGS="${CFLAGS}"
+  export CGO_CXXFLAGS="${CXXFLAGS}"
+  export CGO_LDFLAGS="${LDFLAGS}"
+  export GOFLAGS="-trimpath -ldflags=-linkmode=external -mod=readonly -modcacherw"
+  mage build:binaries
+}
+
+package() {
+  cd nordvpn-linux
+
+  install -D assets/icon.svg ${pkgdir}/usr/share/icons/hicolor/scalable/apps/nordvpn.svg
+
+  install -D bin/amd64/nordfileshared -t ${pkgdir}/usr/bin
+  install -D bin/amd64/nordvpn        -t ${pkgdir}/usr/bin
+  install -D bin/amd64/nordvpnd       -t ${pkgdir}/usr/bin
+
+  install -D contrib/desktop/nordvpn.desktop             -t ${pkgdir}/usr/share/applications
+  install -D contrib/manual/mantemplate                     ${pkgdir}/usr/share/man/man1/nordvpn.1
+  install -D contrib/systemd/system/nordvpnd.service     -t ${pkgdir}/usr/lib/systemd/system
+  install -D contrib/systemd/system/nordvpnd.socket      -t ${pkgdir}/usr/lib/systemd/system
+  install -D contrib/systemd/tmpfiles.d/nordvpn.conf     -t ${pkgdir}/usr/lib/tmpfiles.d
+  install -D contrib/systemd/user/nordfileshared.service -t ${pkgdir}/usr/lib/systemd/user
+  install -D contrib/systemd/user/nordfileshared.socket  -t ${pkgdir}/usr/lib/systemd/user
+
+  #install -D contrib/rsa/rsa-key-1.pub
+  #rsa-key-1.pub and other stuff is installed in ${pkgdir}/var/lib/nordvpn/data in nordvpn-bin pkgbuild
+  #bash completions exist in .deb package/nordvpn-bin pkgbuild
+  # .install file not included https://aur.archlinux.org/cgit/aur.git/tree/nordvpn-bin.install?h=nordvpn-bin
+}
