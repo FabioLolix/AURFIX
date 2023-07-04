@@ -2,16 +2,22 @@
 # contributors: yochananmarqos, bpierre, PedroHLC, rodrigo21
 pkgname='lib32-vkbasalt'
 pkgver=0.3.2.9
-pkgrel=1
+pkgrel=2
 pkgdesc='A Vulkan post-processing layer. Some of the effects are CAS, FXAA, SMAA, deband.'
 arch=('x86_64')
 url='https://github.com/DadSchoorse/vkBasalt'
 license=('zlib')
-makedepends=('meson' 'ninja' 'glslang' 'spirv-headers' 'vulkan-headers'
-             'lib32-gcc-libs' 'lib32-libx11')
-depends=('lib32-gcc-libs' 'lib32-libx11' 'vkbasalt')
-source=("${url}/releases/download/v${pkgver}/vkBasalt-${pkgver}.tar.gz")
-sha256sums=('15cbac85be0f3ec811aeb5496d7966a4ee96b6031ad3da510f28ce9541ba6860')
+depends=('lib32-glibc' 'lib32-gcc-libs' 'lib32-libx11' 'vkbasalt')
+makedepends=('meson' 'ninja' 'glslang' 'spirv-headers' 'vulkan-headers')
+source=("${url}/releases/download/v${pkgver}/vkBasalt-${pkgver}.tar.gz"
+        "vkbasalt-gcc13-fix.patch::https://github.com/DadSchoorse/vkBasalt/commit/4f97f09ffe91900e6ca136cc26cf7966f8f6970d.patch")
+sha256sums=('15cbac85be0f3ec811aeb5496d7966a4ee96b6031ad3da510f28ce9541ba6860'
+            '97e7fc594261356670580d4714a461e1caf954bcb5994d4b03ea788855d16707')
+
+prepare() {
+  cd ${srcdir}/vkBasalt-${pkgver}
+  patch -Np1 -i ../vkbasalt-gcc13-fix.patch
+}
 
 build() {
   cd ${srcdir}/vkBasalt-${pkgver}
@@ -34,5 +40,5 @@ package() {
 
   DESTDIR="${pkgdir}" ninja -C build install
   mv "${pkgdir}/usr/share/vulkan/implicit_layer.d/vkBasalt.json" "${pkgdir}/usr/share/vulkan/implicit_layer.d/vkBasalt.x86.json"
-  install -Dm 644 LICENSE -t "${pkgdir}/usr/share/licenses/lib32-vkBasalt"
+  install -Dm 644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
