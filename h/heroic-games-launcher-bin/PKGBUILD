@@ -1,24 +1,23 @@
-# Maintainer: Chris Werner Rau <aur@cwrau.io>
 # Maintainer: flaviofearn <flavioislima@gmail.com>
+# Contributor: Chris Werner Rau <aur@cwrau.io>
 
 pkgname=heroic-games-launcher-bin
-_pkgver=v2.9.1
-pkgver=${_pkgver#v}
-pkgrel=2
+pkgver=2.9.1
+pkgrel=3
 pkgdesc="HGL, a Native alternative Linux Launcher for Epic and GOG Games"
 arch=('x86_64')
-url="https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher"
+url="https://heroicgameslauncher.com/"
 license=('GPL3')
-conflicts=(${pkgname%-*}-{appimage,electron})
-depends=('fuse2' 'gawk')
-_filename=heroic-${pkgver}.pacman
-source=("$url/releases/download/${_pkgver}/${_filename}")
-noextract=("${_filename}")
-md5sums=('2f78344617fb2d0991fe7d90083b9f03')
+depends=(gtk3 nss alsa-lib)
+provides=(heroic-games-launcher)
+conflicts=(heroic-games-launcher)
 options=(!strip)
+source=("https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v${pkgver}/heroic-${pkgver}.pacman")
+noextract=("heroic-${pkgver}.pacman")
+sha256sums=('67bf96028b4e9b882eaa53fd7e02193f5201d69487d86396a852668f32622ab0')
 
 package() {
-  tar -xJv -C "${pkgdir}" -f "${srcdir}/${_filename}" usr opt
+  tar -xJv -C "${pkgdir}" -f "${srcdir}/heroic-${pkgver}.pacman" usr opt
   mkdir "$pkgdir/usr/bin"
   ln -s "/opt/Heroic/heroic" "$pkgdir/usr/bin/heroic"
 }
