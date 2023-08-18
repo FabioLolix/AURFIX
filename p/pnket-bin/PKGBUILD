@@ -1,17 +1,20 @@
 # Maintainer: Piano Nekomiya <kotone.olin1010@gmail.com>
-pkgname=pnket
-pkgver=0.2.2
-pkgrel=2
+pkgname=pnket-bin
+pkgver=0.3.1
+pkgrel=1
 pkgdesc="A download manager"
 arch=("x86_64")
 url="https://github.com/Ablaze-MIRAI/pnket"
 license=('MIT')
-source=("https://github.com/Ablaze-MIRAI/pnket/releases/download/v0.2.2/pnket")
-noextract=()
-md5sums=("SKIP")
-validpgpkeys=()
+provides=(pnket)
+conflicts=(pnket)
+source=("pnket-license::https://raw.githubusercontent.com/Ablaze-MIRAI/pnket/main/LICENSE")
+source_x86_64=("pnket-bin-${pkgver}::https://github.com/Ablaze-MIRAI/pnket/releases/download/v${pkgver}/pnket")
+sha256sums=('7a05d69d50080dba1f6cb2560dfb68e4a24cff2e4c890aaab16ade041a4a31a2')
+sha256sums_x86_64=('d3d842c25390ac4aefda731ded6128caa6f9c03c862ebf8c3b1887516ba91399')
 
 package() {
 	cd "${srcdir}"
-	install -Dm755 "${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
+	install -Dm755 "pnket-bin-${pkgver}" "${pkgdir}/usr/bin/pnket"
+    install -Dm644 pnket-license "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
