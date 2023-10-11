@@ -3,7 +3,7 @@
 pkgname=spacedrive-dev-bin
 pkgver=0.1.0
 pkgrel=1
-pkgdesc="File manager powered by a virtual distributed filesystem written in Rust"
+pkgdesc="File manager powered by a virtual distributed filesystem written in Rust, Alpha release"
 arch=(x86_64)
 url="https://spacedrive.com"
 license=(AGPL3)
