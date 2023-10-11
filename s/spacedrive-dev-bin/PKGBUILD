@@ -1,0 +1,24 @@
+# Maintainer: 
+
+pkgname=spacedrive-dev-bin
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="File manager powered by a virtual distributed filesystem written in Rust"
+arch=(x86_64)
+url="https://spacedrive.com"
+license=(AGPL3)
+depends=(gtk3 ffmpeg4.4 webkit2gtk openssl-1.1
+
+         # namcap implicit depends
+         glibc gcc-libs glib2 pango libsoup cairo gdk-pixbuf2)
+provides=(spacedrive)
+conflicts=(spacedrive)
+source_x86_64=("spacedrive-${pkgver}-x86_64.deb::https://github.com/spacedriveapp/spacedrive/releases/download/${pkgver}/Spacedrive-linux-x86_64.deb")
+sha256sums_x86_64=('9c38bea4466551a67a28f1b43e0e0262b6893179b2566f7e72b5ec3aa2f47db7')
+
+package() {
+  bsdtar -xf ${srcdir}/data.tar.gz -C ${pkgdir}/
+  chown root:root -vR "${pkgdir}/"
+  chmod 755 -vR "${pkgdir}/"
+}
+
