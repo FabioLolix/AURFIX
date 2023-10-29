@@ -3,8 +3,8 @@
 # Contributor: Chandler Klüser <chandler.kluser@gmail.com>
 
 pkgname=vircon32-desktop-emulator-git
-pkgver=23.6.4.r36.g24770a4
-pkgrel=3
+pkgver=23.6.4.r41.g9690fc6
+pkgrel=1
 pkgdesc="Vircon32 Desktop Emulator"
 arch=(x86_64)
 url="http://www.vircon32.com/"
@@ -18,7 +18,7 @@ sha256sums=('SKIP')
 
 pkgver() {
   cd vircon32
-  git describe --long --tags | sed 's/^emulator-v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+  git describe --long --tags --exclude devtools* | sed 's/^emulator-v//;s/\([^-]*-g\)/r\1/;s/-/./g'
 }
 
 build() {
