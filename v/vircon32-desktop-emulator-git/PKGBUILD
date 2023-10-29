@@ -3,24 +3,30 @@
 # Contributor: Chandler Klüser <chandler.kluser@gmail.com>
 
 pkgname=vircon32-desktop-emulator-git
-pkgver=24770a4337f52553a792bbe618377297794149ae
-pkgrel=1
-epoch=20230909
+pkgver=23.6.4.r36.g24770a4
+pkgrel=3
 pkgdesc="Vircon32 Desktop Emulator"
-arch=('x86_64')
-url="https://github.com/vircon32/ComputerSoftware"
-license=('unknown')
-depends=('mesa' 'sdl2' 'sdl2_image' 'openal' 'freealut' 'tinyxml2' 'gtk2')
-makedepends=('glibc' 'git' 'cmake')
-provides=('vircon32-desktop-emulator')
-source=("ComputerSoftware::git+$url.git")
-md5sums=('SKIP')
+arch=(x86_64)
+url="http://www.vircon32.com/"
+license=(BSD)
+depends=(sdl2 sdl2_image openal freealut tinyxml2 gtk2) #mesa
+makedepends=(git cmake)
+provides=(vircon32-desktop-emulator)
+conflicts=(vircon32-desktop-emulator)
+source=("vircon32::git+https://github.com/vircon32/ComputerSoftware.git")
+sha256sums=('SKIP')
+
+pkgver() {
+  cd vircon32
+  git describe --long --tags | sed 's/^emulator-v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+  cmake -B build -S vircon32/DesktopEmulator
+  cmake --build build
+}
 
 package() {
-  cd ComputerSoftware/DesktopEmulator
-  mkdir build && cd build
-
-  cmake ..
-  cmake --build .
-  make DESTDIR="$pkgdir" install
+  DESTDIR="$pkgdir" cmake --install build
+  install -D vircon32/DesktopEmulator/Data/Readme.txt -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
