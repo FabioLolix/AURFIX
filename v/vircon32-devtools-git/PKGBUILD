@@ -1,0 +1,34 @@
+# Maintainer: 
+# Contributor: 
+
+pkgname=vircon32-development-tools-git
+pkgver=23.10.27.r0.g9690fc6
+pkgrel=1
+pkgdesc="Vircon32 Development Tools"
+arch=(x86_64)
+url="http://www.vircon32.com/"
+license=(BSD)
+depends=(glibc gcc-libs sdl2 libpng tinyxml2)
+makedepends=(git cmake)
+provides=(vircon32-development-tools)
+conflicts=(vircon32-development-tools)
+source=("vircon32::git+https://github.com/vircon32/ComputerSoftware.git")
+sha256sums=('SKIP')
+
+pkgver() {
+  cd vircon32
+  git describe --long --tags --exclude emulator* | sed 's/^devtools-v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+  cmake -B build -S vircon32/DevelopmentTools \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DCMAKE_INSTALL_PREFIX=/usr
+
+  cmake --build build
+}
+
+package() {
+  DESTDIR="$pkgdir" cmake --install build
+  install -D vircon32/DevelopmentTools/Data/Readme.txt -t "${pkgdir}/usr/share/licenses/${pkgname}"
+}
