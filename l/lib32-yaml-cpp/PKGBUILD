@@ -12,8 +12,8 @@ url="https://github.com/jbeder/yaml-cpp"
 arch=('x86_64')
 license=('MIT')
 depends=('lib32-gcc-libs' 'lib32-glibc')
-makedepends=('cmake' 'gcc-multilib' 'ninja')
-source=("https://github.com/jbeder/yaml-cpp/archive/refs/tags/${pkgver}.tar.gz")
+makedepends=('cmake' 'ninja')
+source=("yaml-cpp-${pkgver}.tar.gz::https://github.com/jbeder/yaml-cpp/archive/refs/tags/${pkgver}.tar.gz")
 sha512sums=('aae9d618f906117d620d63173e95572c738db518f4ff1901a06de2117d8deeb8045f554102ca0ba4735ac0c4d060153a938ef78da3e0da3406d27b8298e5f38e')
 
 build() {
@@ -26,6 +26,7 @@ build() {
 
   cmake -GNinja \
         -Bbuild \
+        -Wno-dev \
         -DYAML_CPP_BUILD_TESTS=ON \
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DCMAKE_INSTALL_LIBDIR=lib32 \
@@ -47,4 +48,5 @@ package() {
   rm -rf "${pkgdir}"/usr/{include,share}
   rm -rf "${pkgdir}"/usr/{lib32,lib32/pkgconfig}/*{gtest,gmock}*
   rm -rf "${pkgdir}"/usr/lib32/cmake/GTest
+  install -D LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
