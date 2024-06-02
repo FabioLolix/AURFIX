@@ -1,0 +1,17 @@
+pkg/
+src/
+winff
+*~
+*.log
+*.bz2
+*.gz
+*.jar
+*.lzo
+*.tar
+*.tgz
+*.tbz
+*.txz
+*.xz
+*.xz4
+*.zip
+*.zst
