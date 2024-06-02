@@ -5,14 +5,14 @@
 # Contributor: Paolo Stivanin <admin@polslinux.it>
 
 pkgbase=winff
-pkgname=(winff-common winff-gtk2 winff-qt5)
+pkgname=(winff-common winff-gtk2 winff-qt5 winff-qt6)
 pkgver=1.6.4
-pkgrel=2
+pkgrel=3
 pkgdesc='GUI for ffmpeg written in Lazarus'
 url='https://github.com/WinFF/winff/'
 license=('GPL3')
 arch=('x86_64')
-makedepends=('lazarus' 'gendesk' 'git' gtk2 qt5pas)
+makedepends=('lazarus' 'gendesk' 'git' gtk2 qt5pas qt6pas)
 source=("git+https://github.com/WinFF/winff.git#tag=winff-$pkgver")
 md5sums=('SKIP')
 
@@ -28,6 +28,12 @@ prepare() {
     --pkgdesc "GUI for ffmpeg written in Lazarus/Qt5" \
     --genericname 'Video converter' \
     --categories 'AudioVideo;AudioVideoEditing;QT'
+
+  gendesk -n -f \
+    --pkgname "winff-qt6" \
+    --pkgdesc "GUI for ffmpeg written in Lazarus/Qt6" \
+    --genericname 'Video converter' \
+    --categories 'AudioVideo;AudioVideoEditing;QT'
 }
 
 build() {
@@ -38,6 +44,9 @@ build() {
 
   lazbuild --lazarusdir=/usr/lib/lazarus winff.lpr --ws=qt5 --os=linux --cpu=$ARCH
   mv winff winff-qt5
+
+  lazbuild --lazarusdir=/usr/lib/lazarus winff.lpr --ws=qt6 --os=linux --cpu=$ARCH
+  mv winff winff-qt6
 }
 
 package_winff-common() {
@@ -82,6 +91,15 @@ package_winff-qt5() {
 
   cd "$pkgbase/$pkgbase"
   install -Dt "${pkgdir}/usr/bin/" winff-qt5
+}
+
+package_winff-qt6() {
+  depends=(winff-common ffmpeg qt6pas)
+
+  install -Dm644 -t "$pkgdir/usr/share/applications/" winff-qt6.desktop
+
+  cd "$pkgbase/$pkgbase"
+  install -Dt "${pkgdir}/usr/bin/" winff-qt6
 }
 
 # getver: -u 2 github.com/WinFF/winff/tree/master/winff
