@@ -5,33 +5,43 @@
 # Contributor: Paolo Stivanin <admin@polslinux.it>
 
 pkgbase=winff
-pkgname=(winff-common winff-gtk2 winff-qt5 winff-qt6)
+pkgname=(winff-common winff-gtk2 winff-gtk3 winff-qt5 winff-qt6)
 pkgver=1.6.4
-pkgrel=3
+pkgrel=4
 pkgdesc='GUI for ffmpeg written in Lazarus'
 url='https://github.com/WinFF/winff/'
 license=('GPL3')
 arch=('x86_64')
-makedepends=('lazarus' 'gendesk' 'git' gtk2 qt5pas qt6pas)
+makedepends=('lazarus' 'gendesk' 'git' gtk2 gtk3 qt5pas qt6pas)
 source=("git+https://github.com/WinFF/winff.git#tag=winff-$pkgver")
 md5sums=('SKIP')
 
 prepare() {
   gendesk -n -f \
-    --pkgname "winff-gtk2" \
+    --pkgname "Winff GTK2" \
     --pkgdesc "GUI for ffmpeg written in Lazarus/GTK+2" \
+    --icon winff \
     --genericname 'Video converter' \
     --categories 'AudioVideo;AudioVideoEditing;GTK'
 
   gendesk -n -f \
-    --pkgname "winff-qt5" \
+    --pkgname "Winff GTK3" \
+    --pkgdesc "GUI for ffmpeg written in Lazarus/GTK+3" \
+    --icon winff \
+    --genericname 'Video converter' \
+    --categories 'AudioVideo;AudioVideoEditing;GTK'
+
+  gendesk -n -f \
+    --pkgname "Winff Qt5" \
     --pkgdesc "GUI for ffmpeg written in Lazarus/Qt5" \
+    --icon winff \
     --genericname 'Video converter' \
     --categories 'AudioVideo;AudioVideoEditing;QT'
 
   gendesk -n -f \
-    --pkgname "winff-qt6" \
+    --pkgname "Winff Qt6" \
     --pkgdesc "GUI for ffmpeg written in Lazarus/Qt6" \
+    --icon winff \
     --genericname 'Video converter' \
     --categories 'AudioVideo;AudioVideoEditing;QT'
 }
@@ -41,6 +51,9 @@ build() {
 
   lazbuild --lazarusdir=/usr/lib/lazarus winff.lpr --ws=gtk2 --os=linux --cpu=$ARCH
   mv winff winff-gtk2
+
+  lazbuild --lazarusdir=/usr/lib/lazarus winff.lpr --ws=gtk3 --os=linux --cpu=$ARCH
+  mv winff winff-gtk3
 
   lazbuild --lazarusdir=/usr/lib/lazarus winff.lpr --ws=qt5 --os=linux --cpu=$ARCH
   mv winff winff-qt5
@@ -72,7 +85,7 @@ package_winff-common() {
   cp winff.1 "$pkgdir/usr/share/man/man1"
 
   install -dm755  "$pkgdir/usr/share/doc"
-  cp -a docs "$pkgdir/usr/share/doc/$pkgbase" 
+  cp -a docs "$pkgdir/usr/share/doc/$pkgbase"
 }
 
 package_winff-gtk2() {
@@ -82,6 +95,15 @@ package_winff-gtk2() {
 
   cd "$pkgbase/$pkgbase"
   install -Dt "${pkgdir}/usr/bin/" winff-gtk2
+}
+
+package_winff-gtk3() {
+  depends=(winff-common ffmpeg gtk3)
+
+  install -Dm644 -t "$pkgdir/usr/share/applications/" winff-gtk3.desktop
+
+  cd "$pkgbase/$pkgbase"
+  install -Dt "${pkgdir}/usr/bin/" winff-gtk3
 }
 
 package_winff-qt5() {
