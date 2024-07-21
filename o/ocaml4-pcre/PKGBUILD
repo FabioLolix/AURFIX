@@ -5,26 +5,24 @@
 # Contributor: Sergei Lebedev <superbobry@gmail.com>
 # Contributor: Magnus Therning <magnus@therning.org>
 
-pkgname=ocaml-pcre
+pkgname=ocaml4-pcre
 pkgver=7.5.0
 pkgrel=3
 pkgdesc="Perl compatible regular expressions for OCaml"
 arch=('x86_64')
 url="http://mmottl.github.io/pcre-ocaml"
 license=('custom:LGPL2.1 with linking exception')
-depends=('ocaml-base' 'ocaml-findlib' 'pcre')
+depends=('ocaml4' 'ocaml4-findlib' 'pcre')
 makedepends=('dune')
-provides=('pcre-ocaml')
-replaces=('pcre-ocaml')
-conflicts=('pcre-ocaml')
-options=('!strip' 'staticlibs')
+conflicts=(ocaml-pcre)
 source=("https://github.com/mmottl/pcre-ocaml/releases/download/${pkgver}/pcre-${pkgver}.tbz")
 sha256sums=('671142f40b6d86171cbc067253faadf903019161d57488bd0fb6c5456c2cbd1a')
+options=('!strip' 'staticlibs')
 
 build() {
     cd "${srcdir}/pcre-${pkgver}"
 
-    export OCAMLPATH="$(ocamlfind printconf destdir)"
+    #export OCAMLPATH="$(ocamlfind printconf destdir)"
     dune build @install
 }
 

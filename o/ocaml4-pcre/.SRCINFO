@@ -1,4 +1,4 @@
-pkgbase = ocaml-pcre
+pkgbase = ocaml4-pcre
 	pkgdesc = Perl compatible regular expressions for OCaml
 	pkgver = 7.5.0
 	pkgrel = 3
@@ -6,15 +6,13 @@ pkgbase = ocaml-pcre
 	arch = x86_64
 	license = custom:LGPL2.1 with linking exception
 	makedepends = dune
-	depends = ocaml-base
-	depends = ocaml-findlib
+	depends = ocaml4
+	depends = ocaml4-findlib
 	depends = pcre
-	provides = pcre-ocaml
-	conflicts = pcre-ocaml
-	replaces = pcre-ocaml
+	conflicts = ocaml-pcre
 	options = !strip
 	options = staticlibs
 	source = https://github.com/mmottl/pcre-ocaml/releases/download/7.5.0/pcre-7.5.0.tbz
 	sha256sums = 671142f40b6d86171cbc067253faadf903019161d57488bd0fb6c5456c2cbd1a
 
-pkgname = ocaml-pcre
+pkgname = ocaml4-pcre
