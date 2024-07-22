@@ -1,17 +1,18 @@
-pkgbase = faugus-launcher
+pkgbase = faugus-launcher-git
 	pkgdesc = Simple and Lightweight Game Launcher
-	pkgver = 1.0
-	pkgrel = 43
+	pkgver = r87.f7dbec2
+	pkgrel = 1
+	url = https://github.com/Faugus/faugus-launcher
 	arch = x86_64
 	license = GPL
+	makedepends = git
 	depends = python
 	depends = python-gobject
 	depends = umu-launcher
 	depends = p7zip
-	depends = git
 	provides = faugus-launcher
 	conflicts = faugus-launcher
-	source = faugus-launcher::git+https://github.com/Faugus/faugus-launcher.git
+	source = git+https://github.com/Faugus/faugus-launcher.git
 	sha256sums = SKIP
 
-pkgname = faugus-launcher
+pkgname = faugus-launcher-git

@@ -1,18 +1,26 @@
-pkgname=faugus-launcher
-pkgver=1.0
-pkgrel=43
+# Maintainer: name <email>
+
+pkgname=faugus-launcher-git
+pkgver=r87.f7dbec2
+pkgrel=1
 pkgdesc="Simple and Lightweight Game Launcher"
 arch=('x86_64')
-license=('GPL')
-depends=('python' 'python-gobject' 'umu-launcher' 'p7zip' 'git')
+url="https://github.com/Faugus/faugus-launcher"
+license=('GPL') # No license specified in https://github.com/Faugus/faugus-launcher
+depends=('python' 'python-gobject' 'umu-launcher' 'p7zip')
+makedepends=(git)
 provides=('faugus-launcher')
 conflicts=('faugus-launcher')
-
-source=("${pkgname}::git+https://github.com/Faugus/faugus-launcher.git")
+source=("git+https://github.com/Faugus/faugus-launcher.git")
 sha256sums=('SKIP')
 
+pkgver() {
+    cd "faugus-launcher"
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
 package() {
-    cd "$srcdir/${pkgname}"
+    cd "faugus-launcher"
     install -Dm755 faugus-launcher.py "$pkgdir/usr/bin/faugus-launcher"
     install -Dm755 faugus-run.py "$pkgdir/usr/bin/faugus-run"
     install -Dm644 faugus-launcher.desktop "$pkgdir/usr/share/applications/faugus-launcher.desktop"
