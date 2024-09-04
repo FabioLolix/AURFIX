@@ -35,6 +35,9 @@ prepare() {
 }
 
 build() {
+  export CFLAGS+=" -Wno-incompatible-pointer-types"
+  export CXXFLAGS+=" -Wno-incompatible-pointer-types"
+
   cd "${_pkgname}"
   make COPTS="${CFLAGS}" CXXOPTS="${CXXFLAGS}" gtk2
   mv ddb_lyricbar_gtk2.so ddb_lyricbar_gtk2.so.save
