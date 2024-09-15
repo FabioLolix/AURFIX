@@ -1,13 +1,16 @@
 pkgbase = podsync-bin
 	pkgdesc = Turn YouTube or Vimeo channels, users, or playlists into podcast feeds
-	pkgver = 2.4.2
+	pkgver = 2.7.0
 	pkgrel = 1
 	url = https://github.com/mxpv/podsync
 	arch = x86_64
+	arch = aarch64
 	license = MIT
 	provides = podsync
-	source = podsync-bin-2.4.2.tar.gz::https://github.com/mxpv/podsync/releases/download/v2.4.2/Podsync_2.4.2_Linux_x86_64.tar.gz
-	sha256sums = 78b8788d37532850d2424d11926e16a9db70d3929ecfc471ae06808823676203
+	conflicts = podsync
+	source_x86_64 = https://github.com/mxpv/podsync/releases/download/v2.7.0/Podsync_2.7.0_Linux_x86_64.tar.gz
+	sha256sums_x86_64 = 612f43d011bf5000d1ee2b536b0512de250e89c7db3f6c34dc29b163fc21c279
+	source_aarch64 = https://github.com/mxpv/podsync/releases/download/v2.7.0/Podsync_2.7.0_Linux_arm64.tar.gz
+	sha256sums_aarch64 = e85942a52b9421a1899e7b40d2d2af86a1814bde8ad7a430ea29ad4cae44bf41
 
 pkgname = podsync-bin
-

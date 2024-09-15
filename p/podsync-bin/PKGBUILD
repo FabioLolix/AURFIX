@@ -1,16 +1,21 @@
 # Maintainer: Artem Vasilev <artem.vasilev@rwth-aachen.de>
-# Creator:  Dimitris Kiziridis <ragouel at outlook dot com>
+# Contributor: Dimitris Kiziridis <ragouel at outlook dot com>
 
 pkgname=podsync-bin
-pkgver=2.4.2
+pkgver=2.7.0
 pkgrel=1
 pkgdesc="Turn YouTube or Vimeo channels, users, or playlists into podcast feeds"
-arch=('x86_64')
+arch=(x86_64 aarch64)
 url='https://github.com/mxpv/podsync'
-license=('MIT')
-provides=('podsync')
-source=("${pkgname}-${pkgver}.tar.gz::https://github.com/mxpv/podsync/releases/download/v${pkgver}/Podsync_${pkgver}_Linux_x86_64.tar.gz")
-sha256sums=('78b8788d37532850d2424d11926e16a9db70d3929ecfc471ae06808823676203')
+license=(MIT)
+provides=(podsync)
+conflicts=(podsync)
+source_x86_64=("https://github.com/mxpv/podsync/releases/download/v${pkgver}/Podsync_${pkgver}_Linux_x86_64.tar.gz")
+source_aarch64=("https://github.com/mxpv/podsync/releases/download/v${pkgver}/Podsync_${pkgver}_Linux_arm64.tar.gz")
+#source_i686=("https://github.com/mxpv/podsync/releases/download/v${pkgver}/Podsync_${pkgver}_Linux_i386.tar.gz")
+# enable i686 on request, armv6 no longer exist on ALARM but armv7 yes
+sha256sums_x86_64=('612f43d011bf5000d1ee2b536b0512de250e89c7db3f6c34dc29b163fc21c279')
+sha256sums_aarch64=('e85942a52b9421a1899e7b40d2d2af86a1814bde8ad7a430ea29ad4cae44bf41')
 
 package() {
   install -Dm644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
