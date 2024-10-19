@@ -1,14 +1,17 @@
-pkgbase = libusbp-1
-	pkgdesc = Pololu libusbp-1
-	pkgver = 1.1.0.r4.gaad19dc
+pkgbase = libusbp
+	pkgdesc = Pololu USB Library (also known as libusbp) is a cross-platform C library for accessing USB devices
+	pkgver = 1.3.1
 	pkgrel = 1
 	url = https://github.com/pololu/libusbp
-	arch = i686
 	arch = x86_64
-	license = custom
+	arch = i686
+	license = MIT
 	makedepends = cmake
-	source = git+https://github.com/pololu/libusbp.git
-	sha256sums = SKIP
+	makedepends = git
+	depends = glibc
+	conflicts = libusbp-1
+	replaces = libusbp-1
+	source = git+https://github.com/pololu/libusbp.git#tag=1.3.1
+	sha256sums = 6372d6abacf8fb0b129f040c34b21e490bd2dc4720ce841f09f25dfc2a833b3b
 
-pkgname = libusbp-1
-
+pkgname = libusbp
