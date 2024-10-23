@@ -1,15 +1,15 @@
-# Maintainer: Hurstel Alexandre <a.hurstel@unistra.fr>
+# Maintainer: Fabio 'Lolix' Loli <fabio.loli@disroot.org> -> https://github.com/FabioLolix
+# Contributor: Hurstel Alexandre <a.hurstel@unistra.fr>
 
-_pkgname=ASTex
 pkgname=astex-git
 pkgver=r461.3c1e70c
 pkgrel=1
 pkgdesc="ASTex is an open-source library for texture analysis and synthesis."
 arch=(i686 x86_64)
 url="https://astex-icube.github.io"
-license=(GPL)
-depends=(insight-toolkit libpng openexr)
-makedepends=(git cmake cgal glfw glu glew eigen boost gcc13)
+license=(LGPL-2.1-or-later)
+depends=()
+makedepends=(git cmake cgal glfw glu glew eigen boost insight-toolkit libpng openexr suitesparse onetbb)
 provides=(astex)
 conflicts=(astex)
 options=(!lto)
@@ -22,7 +22,6 @@ pkgver() {
 }
 
 build() {
-  export CC=/usr/bin/gcc-13 CXX=/usr/bin/g++-13
   export CFLAGS+=" -Wno-error=format-security"
   export CXXFLAGS+=" -Wno-error=format-security"
 
