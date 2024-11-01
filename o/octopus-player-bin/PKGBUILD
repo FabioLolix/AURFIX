@@ -1,23 +1,18 @@
 # Maintainer: Wraient <rushikeshwastaken@gmail.com>
-pkgname='octopus-player'
-pkgver=v0.0.1
-pkgrel=2
-pkgdesc="Watch shows CLI with playback tracking"
-arch=("x86_64")
-url="https://github.com/Wraient/octopus"
-license=('GPL')
-depends=('mpv' 'rofi')
-source=("octopus::https://github.com/Wraient/octopus/releases/latest/download/octopus")
-sha256sums=('SKIP')
 
-pkgver() {
-    # Fetch the latest release tag from GitHub and set it as pkgver
-    local latest_release
-    latest_release=$(curl -s https://api.github.com/repos/Wraient/octopus/releases/latest | grep -Po '"tag_name": "\K.*?(?=")')
-    echo "$latest_release"
-}
+pkgname=octopus-player-bin
+pkgver=0.0.1
+pkgrel=3
+pkgdesc="Watch shows CLI with playback tracking"
+arch=(x86_64)
+url="https://github.com/Wraient/octopus"
+license=(GPL)
+depends=(mpv rofi)
+provides=(octopus-player)
+conflicts=(octopus-player)
+source=("octopus-${pkgver}::https://github.com/Wraient/octopus/releases/download/v${pkgver}/octopus")
+sha256sums=('bc6140a0e06ad67484a7a588c1649c5a52c4e0e11f334e4d2c5ba276e745720e')
 
 package() {
-    # Install the precompiled binary into /usr/bin
-    install -Dm755 "$srcdir/octopus" "$pkgdir/usr/bin/octopus"
+  install -Dm755 "octopus-${pkgver}" "$pkgdir/usr/bin/octopus"
 }

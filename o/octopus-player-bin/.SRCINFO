@@ -1,13 +1,15 @@
-pkgbase = octopus-player
+pkgbase = octopus-player-bin
 	pkgdesc = Watch shows CLI with playback tracking
-	pkgver = v0.0.1
-	pkgrel = 2
+	pkgver = 0.0.1
+	pkgrel = 3
 	url = https://github.com/Wraient/octopus
 	arch = x86_64
 	license = GPL
 	depends = mpv
 	depends = rofi
-	source = octopus::https://github.com/Wraient/octopus/releases/latest/download/octopus
-	sha256sums = SKIP
+	provides = octopus-player
+	conflicts = octopus-player
+	source = octopus-0.0.1::https://github.com/Wraient/octopus/releases/download/v0.0.1/octopus
+	sha256sums = bc6140a0e06ad67484a7a588c1649c5a52c4e0e11f334e4d2c5ba276e745720e
 
-pkgname = octopus-player
+pkgname = octopus-player-bin
