@@ -1,0 +1,37 @@
+# Maintainer: Wraient <rushikeshwastaken@gmail.com>
+
+pkgname=octopus-player
+pkgver=0.0.1.r9.g5e07aa9
+pkgrel=1
+pkgdesc="Watch shows CLI with playback tracking"
+arch=(x86_64)
+url="https://github.com/Wraient/octopus"
+license=(MIT)
+depends=(mpv rofi)
+makedepends=(git go)
+provides=(octopus-player)
+conflicts=(octopus-player)
+source=("git+https://github.com/Wraient/octopus.git")
+sha256sums=('SKIP')
+
+pkgver() {
+  cd octopus
+  git describe --long --tags --abbrev=7 | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+  cd "octopus/cmd/octopus"
+  go build \
+    -trimpath \
+    -buildmode=pie \
+    -mod=readonly \
+    -modcacherw \
+    -ldflags "-linkmode external -extldflags \"${LDFLAGS}\"" \
+    .
+}
+
+package() {
+  cd octopus
+  install -Dm755 -t "$pkgdir/usr/bin/" "cmd/octopus/octopus"
+  install -D -t "${pkgdir}/usr/share/licenses/${pkgname}" LICENSE
+}
