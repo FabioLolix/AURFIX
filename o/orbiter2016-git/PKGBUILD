@@ -1,17 +1,18 @@
-# Maintainer: Mr.Smith1974
-# Contributor: Fabio 'Lolix' Loli <lolix@disroot.org>
+# Maintainer: Fabio 'Lolix' Loli <fabio.loli@disroot.org>
+# Contributor: Mr.Smith1974
 
 pkgname=orbiter2016-git
-pkgver=r559.a2dc3556
-pkgrel=1
+pkgver=r561.ad964944
+pkgrel=3
 pkgdesc="Orbiter Space Flight Simulator"
 arch=(x86_64)
 url="http://orbit.medphys.ucl.ac.uk/index.html"
 license=(MIT)
-depends=()
-makedepends=(git cmake glfw-x11 openal libsndfile glm texlive-latex)
-provides=()
-conflicts=()
+depends=(glibc gcc-libs libsndfile libglvnd glfw-x11 openal fontconfig zlib)
+makedepends=(git cmake glm texlive-latex lua51)
+provides=(orbiter2016)
+conflicts=(orbiter2016)
+options=(!strip)
 source=("TheGondos-orbiter::git+https://github.com/TheGondos/orbiter.git#branch=linux"
         "TheGondos-imgui::git+https://github.com/TheGondos/imgui.git"
         "TheGondos-XRVessels::git+https://github.com/TheGondos/XRVessels.git"
@@ -85,9 +86,12 @@ prepare() {
 }
 
 build() {
+  CFLAGS+=" -Wno-error=format-security"
+  CXXFLAGS+=" -Wno-error=format-security"
+
   cmake -B build -S TheGondos-orbiter -Wno-dev \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DCMAKE_INSTALL_PREFIX=/usr
+    -DCMAKE_INSTALL_PREFIX=/usr/share
 
   #can't find Orbitersdk.h at the first run
   cmake --build build || true
@@ -95,6 +99,13 @@ build() {
 }
 
 package () {
-  DESTDIR="$pkgdir" cmake --install build
-  install -D LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
+  DESTDIR="${pkgdir}" cmake --install build
+  install -D TheGondos-orbiter/LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
+
+  # Are installed stuff that don't have to be
+  rm -rf "${pkgdir}/build"
+
+  #test -d "${pkgdir}"/build     && rm -rf "${pkgdir}"/build
+  #test -d "${pkgdir}"/usr/src   && rm -rf "${pkgdir}"/usr/src
+  #test -d "${pkgdir}"/home      && rm -rf "${pkgdir}"/home
 }
