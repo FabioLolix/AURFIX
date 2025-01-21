@@ -1,20 +1,18 @@
 pkgbase = omake-git
 	pkgdesc = A build system designed for scalability and portability
-	pkgver = r328.988b2a7
-	pkgrel = 2
-	url = http://projects.camlcity.org/projects/omake.html
-	arch = i686
+	pkgver = 0.10.7.r2.g0707479
+	pkgrel = 1
+	url = https://github.com/ocaml-omake/omake
 	arch = x86_64
-	license = GPL
+	license = GPL-2.0-only
 	makedepends = git
-	makedepends = gcc
 	makedepends = ocaml
+	depends = glibc
 	depends = ncurses
 	depends = readline
 	provides = omake
 	conflicts = omake
-	source = omake::git+https://github.com/ocaml-omake/omake.git
-	sha1sums = SKIP
+	source = git+https://github.com/ocaml-omake/omake.git
+	sha256sums = SKIP
 
 pkgname = omake-git
-

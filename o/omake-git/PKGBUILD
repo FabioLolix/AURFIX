@@ -1,39 +1,33 @@
 # Maintainer: SebRmv <sbriais at-symbol free dot fr>
-pkgname=omake-git
-pkgver=r328.988b2a7
-pkgrel=2
-pkgdesc="A build system designed for scalability and portability"
-arch=('i686' 'x86_64')
-url=http://projects.camlcity.org/projects/omake.html
-license=('GPL')
-depends=('ncurses' 'readline')
-makedepends=('git' 'gcc' 'ocaml')
-provides=('omake')
-conflicts=('omake')
-source=('omake::git+https://github.com/ocaml-omake/omake.git')
-sha1sums=(SKIP)
 
-_gitname='omake'
+pkgname=omake-git
+pkgver=0.10.7.r2.g0707479
+pkgrel=1
+pkgdesc="A build system designed for scalability and portability"
+arch=(x86_64)
+url="https://github.com/ocaml-omake/omake"
+license=(GPL-2.0-only)
+depends=(glibc ncurses readline)
+makedepends=(git ocaml)
+provides=(omake)
+conflicts=(omake)
+source=("git+https://github.com/ocaml-omake/omake.git")
+sha256sums=('SKIP')
+
+pkgver() {
+  cd "omake"
+  git describe --long --tags --abbrev=7 | sed 's/^omake-//;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
 
 build() {
-  msg "Starting build..."
-
-  cd "$srcdir"
-  rm -rf "$_gitname-build"
-  cp -r "$_gitname" "$_gitname-build"
-
-  cd "$_gitname-build"
-
-  ./configure --prefix /usr && make
+  cd "omake"
+  ./configure -prefix=/usr
+  make
 }
 
 package() {
-  cd "$srcdir/$_gitname-build"
-  mkdir -p $pkgdir/opt/omake
+  cd "omake"
   make INSTALL_ROOT="$pkgdir" install
-}
-
-pkgver() {
-  cd "$srcdir/$_gitname"
-  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+  mkdir -vp "$pkgdir"/usr/share/
+  mv -v "$pkgdir"/usr/man "$pkgdir"/usr/share/
 }
