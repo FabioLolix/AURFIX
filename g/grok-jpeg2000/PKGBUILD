@@ -1,7 +1,7 @@
 # Maintainer: necklace <ns@nsz.no>
 
 pkgname=grok-jpeg2000
-pkgver=14.1.0
+pkgver=14.3.0
 pkgrel=1
 pkgdesc="A high performance open source JPEG 2000 codec."
 arch=(x86_64)
@@ -10,7 +10,7 @@ license=(AGPL-3.0-only)
 depends=(libpng libtiff lcms2 libjpeg perl-image-exiftool)
 makedepends=(cmake cli11 doxygen python-sphinx)
 source=("$pkgname-$pkgver.tar.gz::https://github.com/GrokImageCompression/grok/archive/v$pkgver.tar.gz")
-sha256sums=('4d83e7e29243d6f4ff5bc9c82116d535c0a90b5af425ee15d7deede362ce3393')
+sha256sums=('832fcd6bc5bd2ce430373c3206f03097d265e4ffce55b7ceb4e27733fdcafbf4')
 
 build() {
   local _flags=(
