@@ -1,6 +1,6 @@
 # Maintainer: Steffen Hansen <steffengrundsoe@gmail.com>
 pkgname=quickemu
-pkgver=4.9.6
+pkgver=4.9.7
 pkgrel=2
 pkgdesc="Quickly create and run optimised Windows, macOS and Linux desktop virtual machines."
 arch=(any)
@@ -9,13 +9,13 @@ license=(MIT)
 depends=(qemu-desktop jq python cdrtools usbutils spice-gtk swtpm xorg-xrandr zsync edk2-ovmf)
 optdepends=('quickgui: graphical user interface')
 source=("$pkgname-$pkgver.tar.gz"::"https://github.com/quickemu-project/quickemu/archive/refs/tags/$pkgver.tar.gz"
-        "quickemu-4M-OVMF.patch::https://github.com/quickemu-project/quickemu/commit/d0ae72a2510f52ae4a9181d7c65f2c69636ca298.patch")
-sha256sums=('796a047b0bfabb91eb143e5422ff74f5d2812f47120ed6b34eaf82bbdfe3e2a3'
-            '50fe183a23cadad32a99b7b3c0de0aa4e36fd3b2e53fc4aa3cb059d87cc95275')
+        "quickemu-qemu-version-detection.patch::https://github.com/quickemu-project/quickemu/pull/1640/commits/8fad1b9370bf4f825614fa161a41e5e5815665f8.patch")
+sha256sums=('38a93301a2b233bc458c62d1228d310a9c29c63c10d008c2905029ca66188606'
+            '005b198f0d4cd06037eed3036e682f89c9311e1be68d9577702ed788998960a9')
 
 prepare() {
   cd "$pkgname-$pkgver"
-  patch -Np1 -i ../quickemu-4M-OVMF.patch
+  patch -Np1 -i ../quickemu-qemu-version-detection.patch
 }
 
 package() {
