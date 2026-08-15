@@ -1,8 +1,0 @@
-src/
-pkg/
-phoenicis/
-*.log
-*.tar.gz
-*.pkg.tar.xz
-*.pkg.tar.zst
-
