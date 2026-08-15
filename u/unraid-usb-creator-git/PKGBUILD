@@ -9,22 +9,24 @@ arch=(x86_64)
 url="https://github.com/unraid/usb-creator-next"
 license=(Apache-2.0)
 depends=(
-    #curl
+    acl
+    brotli
     glibc
+    gnutls
     hicolor-icon-theme
-    #libarchive
-    openssl
+    libgcc
+    libidn2
+    libstdc++
+    liburing
+    nettle
     qt6-base
     qt6-declarative
-    qt6-svg
-    zlib
     )
 makedepends=(
     cmake
     git
     jemalloc
-    liburing
-    nettle3
+    qt6-svg
     qt6-tools
     vulkan-headers
     )
@@ -32,6 +34,11 @@ provides=(unraid-usb-creator)
 conflicts=(unraid-usb-creator)
 source=("git+https://github.com/unraid/usb-creator-next.git")
 sha256sums=('SKIP')
+
+prepare() {
+  cd "usb-creator-next/src/dependencies"
+  sed -i 's|8.20.0|8.21.0|g' curl.cmake
+}
 
 pkgver() {
   cd "usb-creator-next"
@@ -42,9 +49,6 @@ build() {
   # Disable all warnings
   export CFLAGS+=" -w"
   export CXXFLAGS+=" -w"
-
-  #export CFLAGS+=" -Wno-int-conversion"
-  #export CXXFLAGS+=" -Wno-int-conversion"
 
   local _flags=(
     -DFETCHCONTENT_QUIET:BOOL=OFF
