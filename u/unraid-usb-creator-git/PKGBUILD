@@ -37,6 +37,7 @@ sha256sums=('SKIP')
 
 prepare() {
   cd "usb-creator-next/src/dependencies"
+  # https://github.com/unraid/usb-creator-next/issues/123
   sed -i 's|8.20.0|8.21.0|g' curl.cmake
 }
 
