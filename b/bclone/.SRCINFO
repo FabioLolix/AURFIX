@@ -1,0 +1,23 @@
+pkgbase = bclone
+    pkgname = bclone
+    pkgver = 1.75.2
+    pkgrel = 1
+    url = https://github.com/BenjiThatFoxGuy/bclone
+    arch = x86_64
+    arch = aarch64
+    arch = armv7h
+    license = MIT
+    pkgdesc = rclone with Alist, Alldebrid, iCloud Photos, Teldrive, Terabox, Tmpfs, and unofficial Google Photos (gotohp) support
+    depends = glibc
+    makedepends = go
+    makedepends = git
+    optdepends = fuse3: for rclone mount
+    provides = rclone
+    conflicts = rclone
+    conflicts = bclone-bin
+    conflicts = bclone-git
+    replaces = bclone-bin
+    replaces = bclone-git
+    options = !strip
+    source = git+https://github.com/BenjiThatFoxGuy/bclone.git#tag=v${pkgver}
+    sha256sums = SKIP
