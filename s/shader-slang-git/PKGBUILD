@@ -59,7 +59,7 @@ prepare() {
 			-i {} \+
 
 	# Add include prefix
-	sed -e 's/${CMAKE_INSTALL_INCLUDEDIR}/&\/'"$pkgname"'/g' \
+	sed -e 's/${CMAKE_INSTALL_INCLUDEDIR}/&\/'"shader-slang"'/g' \
 		-i cmake/SlangTarget.cmake
 
 	# Disable double header install
