@@ -2,7 +2,7 @@
 # Contributor: Eric Engestrom <aur [at] engestrom [dot] ch>
 
 pkgname=shader-slang-git
-pkgver=2026.14.1.r73.gc0e5ca5
+pkgver=2026.20.r8.g7251cc6
 pkgrel=1
 pkgdesc='Shading language that makes it easier to build and maintain large shader codebases in a modular and extensible fashion'
 arch=(x86_64)
