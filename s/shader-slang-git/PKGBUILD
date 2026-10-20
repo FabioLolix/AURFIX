@@ -9,28 +9,28 @@ arch=(x86_64)
 url="https://github.com/shader-slang/slang"
 license=('Apache-2.0 WITH LLVM-exception')
 depends=(
-    glslang
-    sh
     glibc
+    glslang
     libgcc
     libstdc++
     lz4
     miniz
     python
     python-yaml
+    sh
     spirv-tools
     )
 makedepends=(
-    git
-    unordered_dense
-	cmake
-	glm
-	python
-	spirv-headers
-	stb
-	vulkan-headers
-	vulkan-icd-loader
+    cmake
     fast_float
+    git
+    glm
+    python
+    spirv-headers
+    stb
+    unordered_dense
+    vulkan-headers
+    vulkan-icd-loader
     )
 conflicts=(shader-slang)
 provides=(shader-slang)
@@ -44,8 +44,6 @@ sha256sums=('SKIP'
 
 prepare() {
   cd slang
-  #git submodule update --init --recursive
-
 	sed -e "s/find_package(lz4.*/include(FindPkgConfig)\npkg_check_modules(lz4 REQUIRED IMPORTED_TARGET GLOBAL liblz4)/" \
 		-e "s/LZ4::lz4/PkgConfig::lz4/g" \
 		-e "/find_package/ s/VulkanHeaders/Vulkan/g" \
